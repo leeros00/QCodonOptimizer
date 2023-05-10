@@ -1,19 +1,20 @@
-from src.constants import code_map
+from quantum_codon_opt.src.constants import code_map
 import random
 from operator import itemgetter
-from src.scoring import SeqScorer
+from quantum_codon_opt.src.scoring import SeqScorer
 from Bio.Seq import Seq
 
 
 class CodonOptimization(object):
-    def __init__(self, seq):
+    def __init__(self, seq, ntrials=50, auto_exec=True):
         self.seq = seq
         self.code_map = code_map
         self.elitelist = 10
         self.randomlist = 2
-        self.ntrials = 50
-        self.numgens = 100
-        self.execute()
+        self.ntrials = ntrials
+        self.numgens = 500
+        if auto_exec:
+            self.execute()
 
     def __repr__(self):
         return 'Classical genetic algorithm for codon optimization.'
@@ -21,6 +22,7 @@ class CodonOptimization(object):
     def execute(self):
         '''
         Main method for codon optimization
+
         '''
 
         # Simulate evolution
@@ -67,6 +69,7 @@ class CodonOptimization(object):
         '''
         Simulate procreation by randomly picking two genes 
         and randomly recombining them with mutations.
+
         '''
 
         new_members = []
@@ -82,6 +85,7 @@ class CodonOptimization(object):
     def _mix_genes(genes_xx, genes_xy):
         '''
         Create new genes by randomly mixing two
+
         '''
         new_genes = []
         for i in range(len(genes_xx)):
@@ -95,6 +99,7 @@ class CodonOptimization(object):
     def _mutate_dna(self, old_genes: list, mutation_chance=0.01):
         '''
         Randomly introduce mutations
+
         '''
         new_d_sequence = ""
         new_indices = []
@@ -117,6 +122,7 @@ class CodonOptimization(object):
     def _reverse_translate(self):
         '''
         Convert to nucleotide sequence
+
         '''
         self.n_seq = ''.join([
             self.code_map[res]['codons'][self.optimal_codon_indices[i]]
@@ -126,6 +132,7 @@ class CodonOptimization(object):
     def _verify_dna(self):
         '''
         Translate nucleotide sequence to make sure it matches input
+
         '''
         if self.seq != str(Seq(self.n_seq).transcribe().translate()):
             raise ValueError(
@@ -134,12 +141,14 @@ class CodonOptimization(object):
     def _get_total_score(self, strand):
         '''
         Use SeqScorer class to score the nucleotide sequence
+
         '''
         return SeqScorer(strand).score
 
     def _get_initial_members(self):
         '''
         Initialize population with randomly assembled members.
+
         '''
         code_map = self.code_map
         initial_members = []
