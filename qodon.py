@@ -1,31 +1,3 @@
-'''
-
-    mRNA Codon Optimization with Quantum Computers 
-    Copyright (C) 2021  Dillion M. Fox, Ross C. Walker
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-
-Example Usage:
-> (qiskit) -bash$ python qodon.py 
-IBM: 0.6752671392317706 0.6752671392317706
-GA: 0.6752671392317706 0.6752671392317706 0.0
-IBM: 0.7994909558630391 0.7370755249557397
-GA: 0.7370755249557397 0.7370755249557397 0.0
-
-'''
-
 from src.classical_ga import CodonOptimization
 from src.codon_bqm import DWaveBQM, QiskitBQM, ibm_score
 from src.constants import *
